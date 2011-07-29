@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Adam training - Basic game loop</title>
+    
+    <script type="text/javascript">
+       djConfig =
+       {
+
+            isDebug: true,
+            //debugAtAllCosts: true,
+            //baseUrl: "./",
+            parseOnLoad: true,
+            modulePaths: {'mygame': '../../basic/mygame'}
+       }
+    </script>
+    
+    <script src="../dojo-release-1.6.0-src/dojo/dojo.js"></script>
+
+    <script type="text/javascript">        
+        dojo.require("mygame.gamearea");
+        dojo.ready(function()
+        {
+		var nils = new mygame.gamearea({ game_div_id: "foo"} );   
+		nils.start();        
+        })
+    </script>
+</head>
+<body>
+    <canvas id="foo" height = "400" width = "400"></canvas>
+</body>
+</html>
