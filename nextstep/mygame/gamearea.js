@@ -14,9 +14,11 @@ dojo.declare("mygame.gamearea", null,
 	constructor: function(args)
 	{
 		var id = args.game_div_id;
-		console.log("canvas id of canvas DOM element is '"+id+"'");
+		
+		console.log("++ canvas id of canvas DOM element is '"+id+"'");
 		// Get reference to the canvas DOM element that is pointed out by the game_div_id argument
 		var el = document.getElementById(id);
+		this.canvaselement = el;		
 		console.log("DOM element is "+el);
 		// Create a new 2D graphics canvas inside that DOM node
 		this.canvas = el.getContext('2d');
@@ -28,13 +30,19 @@ dojo.declare("mygame.gamearea", null,
 	// Start game
 	start: function()
 	{
+		console.log("starting game..");
 		// Create a thing to be in the game
 		var newthing = new mygame.gamething( {x: 10, y: 10, speed: 0.0, direction: 1} );
+		this.player = newthing;
+
 		var newthing2 = new mygame.gamething( {x: 54, y: 232, speed: 1.0, direction: 2} );
 		var newthing3 = new mygame.gamething( {x: 5, y: 10, speed: 2.0, direction: 1} );
 		this.gamethings.push(newthing); // Push the new thing on top of the list of things in the game
 		this.gamethings.push(newthing2);
 		this.gamethings.push(newthing3);
+		// Set up event handler for keypresses
+		console.log("setting up key events..");
+		dojo.connect(document, "onkeypress", dojo.hitch(this, this._onKeyPress));
 		// Set up game loop so that our _render() function is called 30 times a second
 		this.timerID = window.setInterval(dojo.hitch(this, function()
 		{
@@ -62,6 +70,26 @@ dojo.declare("mygame.gamearea", null,
 			thing.draw(this.canvas);
 		}
 
+	},
+
+	_onKeyPress: function(e)
+	{
+		//console.log("Key event is.. "+e.charOrCode);
+		
+	   	switch(e.charOrCode)
+		{
+			case dojo.keys.LEFT_ARROW:
+				console.log("left");				
+				this.player.nudge( 3,  5 );
+				
+	
+			break;
+			case dojo.keys.RIGHT_ARROW:
+				console.log("right");
+				this.player.nudge( 1,  5 );				
+			break;
+	   	}
+	   	dojo.stopEvent(e);
 	}
 
 });
